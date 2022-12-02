@@ -67,11 +67,6 @@ static unsigned int prevScreenScale = 1;
 
 static RenderTexture2D target = { 0 };  // Initialized at init
 
-bool WindowRunning = true;
-
-Rectangle layoutRecs[1] = {
-    (Rectangle){0,0, screenWidth, screenHeight},
-};
 
 // TODO: Define global variables here, recommended to make them static
 
@@ -162,6 +157,12 @@ void UpdateDrawFrame(void)
 
     // TODO: Update variables / Implement example logic at this point
     //----------------------------------------------------------------------------------
+    bool WindowRunning = true;
+
+    Rectangle layoutRecs[1] = {
+        (Rectangle){0,0, screenWidth, screenHeight},
+    };
+
 
     // Draw
     //----------------------------------------------------------------------------------
