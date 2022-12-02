@@ -12,15 +12,26 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+#include "include/external/aes.h"
+#define RRES_IMPLEMENTATION
+#include "include/rres.h"
+#define RRES_RAYLIB_IMPLEMENTATION
+// Compression and Encryption Support
+#define RRES_SUPPORT_COMPRESSION_LZ4
+#define RRES_SUPPORT_COMPRESSION_AES
+#define RRES_SUPPORT_COMPRESSION_XCHACHA20
+#include "include/rres-raylib.h"
+#define RAYGUI_IMPLEMENTATION
+#include "include/raygui.h"
+#include <stdio.h>                          // Required for: printf()
+#include <stdlib.h>                         // Required for: 
+#include <string.h>                         // Required for: 
 
 #if defined(PLATFORM_WEB)
     #define CUSTOM_MODAL_DIALOGS            // Force custom modal dialogs usage
     #include <emscripten/emscripten.h>      // Emscripten library - LLVM to JavaScript compiler
 #endif
 
-#include <stdio.h>                          // Required for: printf()
-#include <stdlib.h>                         // Required for: 
-#include <string.h>                         // Required for: 
 
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -51,11 +62,16 @@ typedef enum {
 //----------------------------------------------------------------------------------
 static const int screenWidth = 256;
 static const int screenHeight = 256;
-
 static unsigned int screenScale = 1; 
 static unsigned int prevScreenScale = 1;
 
 static RenderTexture2D target = { 0 };  // Initialized at init
+
+bool WindowRunning = true;
+
+Rectangle layoutRecs[1] = {
+    (Rectangle){0,0, screenWidth, screenHeight},
+};
 
 // TODO: Define global variables here, recommended to make them static
 
@@ -63,6 +79,7 @@ static RenderTexture2D target = { 0 };  // Initialized at init
 // Module Functions Declaration
 //----------------------------------------------------------------------------------
 static void UpdateDrawFrame(void);      // Update and Draw one frame
+
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -72,6 +89,16 @@ int main(void)
 #if !defined(_DEBUG)
     SetTraceLogLevel(LOG_NONE);         // Disable raylib trace log messsages
 #endif
+
+    //----------------------------------------------------------------------------------
+    // Variable Declaration
+    //----------------------------------------------------------------------------------
+    bool WindowRunning = true;
+
+    Rectangle layoutRecs[1] = {
+       (Rectangle){0,0, screenWidth, screenHeight},
+    };
+
 
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -93,7 +120,7 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button
     {
-        UpdateDrawFrame();
+
     }
 #endif
 
@@ -152,7 +179,7 @@ void UpdateDrawFrame(void)
         
         // Draw render texture to screen scaled as required
         DrawTexturePro(target.texture, (Rectangle){ 0, 0, (float)target.texture.width, -(float)target.texture.height }, (Rectangle){ 0, 0, (float)target.texture.width*screenScale, (float)target.texture.height*screenScale }, (Vector2){ 0, 0 }, 0.0f, WHITE);
-
+        WindowRunning = !GuiWindowBox(layoutRecs[0], "Test");
         // Draw equivalent mouse position on the target render-texture
         DrawCircleLines(GetMouseX(), GetMouseY(), 10, MAROON);
 
