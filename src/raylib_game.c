@@ -97,7 +97,7 @@ int main(void)
 
     // Initialization
     //--------------------------------------------------------------------------------------
-    InitWindow(screenWidth, screenHeight, "raylib 9yr gamejam");
+    InitWindow(screenWidth, screenHeight, "42 > WMS");
     
     // TODO: Load resources / Initialize variables at this point
     
@@ -109,15 +109,13 @@ int main(void)
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
-    SetTargetFPS(60);     // Set our game frames-per-second
+    SetTargetFPS(59);     // Set our game frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!WindowShouldClose() || WindowRunning)    // Detect window close button
+    while (!WindowShouldClose())    // Detect window close button
     {
         BeginDrawing();
-        ClearBackground(WHITE);
-        WindowRunning = !GuiWindowBox(layoutRecs[0], "Test");
         UpdateDrawFrame();
         EndDrawing();
     }
@@ -162,10 +160,6 @@ void UpdateDrawFrame(void)
     // TODO: Update variables / Implement example logic at this point
     //----------------------------------------------------------------------------------
     bool WindowRunning = true;
-
-    Rectangle layoutRecs[1] = {
-        (Rectangle){0,0, screenWidth, screenHeight},
-    };
 
 
     // Draw
