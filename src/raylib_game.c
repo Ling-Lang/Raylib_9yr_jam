@@ -118,6 +118,7 @@ int main(void)
         BeginDrawing();
         ClearBackground(WHITE);
         WindowRunning = !GuiWindowBox(layoutRecs[0], "Test");
+        EndDrawing();
     }
 #endif
 
