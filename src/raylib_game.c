@@ -115,7 +115,9 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button
     {
-
+        BeginDrawing();
+        ClearBackground(WHITE);
+        WindowRunning = !GuiWindowBox(layoutRecs[0], "Test");
     }
 #endif
 
@@ -180,7 +182,6 @@ void UpdateDrawFrame(void)
         
         // Draw render texture to screen scaled as required
         DrawTexturePro(target.texture, (Rectangle){ 0, 0, (float)target.texture.width, -(float)target.texture.height }, (Rectangle){ 0, 0, (float)target.texture.width*screenScale, (float)target.texture.height*screenScale }, (Vector2){ 0, 0 }, 0.0f, WHITE);
-        WindowRunning = !GuiWindowBox(layoutRecs[0], "Test");
         // Draw equivalent mouse position on the target render-texture
         DrawCircleLines(GetMouseX(), GetMouseY(), 10, MAROON);
 
