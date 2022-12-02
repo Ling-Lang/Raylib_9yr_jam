@@ -113,7 +113,7 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button
+    while (!WindowShouldClose() || WindowRunning)    // Detect window close button
     {
         BeginDrawing();
         ClearBackground(WHITE);
